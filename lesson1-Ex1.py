@@ -75,5 +75,5 @@ else:
 input3 = int(input("Enter a number between 0 and 10: "))
 while input3 < 0 or 10 < input3:
     input3 = int(input("Enter a number between 0 and 10: "))
-else:
-    print("Congratulations!")
+
+print("Congratulations!")
