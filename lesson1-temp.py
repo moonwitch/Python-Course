@@ -50,7 +50,7 @@ while True:
             print(
                 "You asked for Celsius and gave Celsius. So yeah, you know your answer ;)"
             )
-            # break
+            break
     elif unit == "F":
         if temp_output == "C":
             c = (temp - 32) * 5 / 9
