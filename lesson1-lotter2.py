@@ -7,7 +7,8 @@ leaderboard = {}
 
 def play_lottery(player_name):
     num_of_guesses = 0  # putting this in the function so it resets when func is called
-    while True:
+    correct_answers = set()
+    while len(correct_answers) < len(WINNER):
         user_input = input("Guess the number: ")
 
         if user_input.lower() in ["q", "quit"]:
@@ -16,10 +17,11 @@ def play_lottery(player_name):
         if not user_input.isnumeric():
             print("Invalid input. Please enter a number.")
             continue
-        elif int(user_input) != WINNER:
+        elif int(user_input) not in WINNER:
             num_of_guesses += 1
         else:
-            return num_of_guesses
+            correct_answers.add(int(user_input))
+    return num_of_guesses, correct_answers
 
 
 def print_leaderboard(leaderboard):
