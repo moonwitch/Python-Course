@@ -54,7 +54,9 @@ while True:
     if result is None:
         print(f"{player_name} quit the game.")
     else:
-        leaderboard.append((result, player_name))  # Drop the 'list' into the list :D, do it score first to use for sorting later
+        leaderboard.append(
+            [result, player_name]
+        )  # Drop the 'list' into the list :D, do it score first to use for sorting later
         print(f"{player_name} guessed the number in {result} guesses.")
 
     again = input("Does anyone else want to play? (y/n): ")
