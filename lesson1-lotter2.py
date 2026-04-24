@@ -14,18 +14,23 @@ def play_lottery(player_name):
         if user_input.lower() in ["q", "quit"]:
             return None
 
+        # DRY applied
+        guess = int(user_input)
+
         if not user_input.isnumeric():  # if it's not a number catch it
             print("Invalid input. Please enter a number.")
             continue
-        elif int(user_input) not in WINNER:
+        elif guess not in WINNER:
             num_of_guesses += 1
+            print(f"You currently have {len(correct_answers)} correct answers.")
         else:
-            if int(user_input) in correct_answers:
-                print(f"You already guessed {int(user_input)}. Try again.")
+            if guess in correct_answers:
+                print(f"You already guessed {guess}. Try again.")
+                print(f"You currently have {len(correct_answers)} correct answers.")
             else:
-                correct_answers.add(int(user_input))
-                print(f"Awesome, {user_input} is indeed a winning number!")
-        print(f"You currently have {len(correct_answers)} correct answers.")
+                correct_answers.add(guess)
+                print(f"Awesome, {guess} is indeed a winning number!")
+
     print("Congratulations!")
     return num_of_guesses
 
