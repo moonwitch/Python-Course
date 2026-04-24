@@ -2,7 +2,7 @@
 WINNER = (1, 4, 9)
 
 # Define scoreboard
-leaderboard = [] # Was Dict, but sorting shucks :D
+leaderboard = []  # Was Dict, but sorting shucks :D
 
 
 def play_lottery(player_name):
@@ -32,7 +32,7 @@ def play_lottery(player_name):
 
 def print_leaderboard(leaderboard):
     # sorting
-    leaderboard = dict(sorted(leaderboard.items(), key=lambda x: x[1]))
+    leaderboard.sort()
 
     # Headers for the table
     headers = ["Name", "Score"]
@@ -54,7 +54,7 @@ while True:
     if result is None:
         print(f"{player_name} quit the game.")
     else:
-        leaderboard[player_name] = result
+        leaderboard.append((result, player_name))  # Drop the 'list' into the list :D, do it score first to use for sorting later
         print(f"{player_name} guessed the number in {result} guesses.")
 
     again = input("Does anyone else want to play? (y/n): ")
