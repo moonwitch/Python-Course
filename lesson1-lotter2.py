@@ -21,11 +21,19 @@ def play_lottery(player_name):
             num_of_guesses += 1
         else:
             correct_answers.add(int(user_input))
-    return num_of_guesses, correct_answers
+        print(f"You currently have {len(correct_answers)} correct answers.")
+    print("Congratulations!")
+    return num_of_guesses
 
 
 def print_leaderboard(leaderboard):
+    # sorting
+    leaderboard = dict(sorted(leaderboard.items(), key=lambda x: x[1]))
+
+    # Headers for the table
     headers = ["Name", "Score"]
+
+    # Table
     print("|-------------------|")
     print(f"| {headers[0]:<10}| {headers[1]:<5}|")
     print("|-------------------|")
@@ -43,7 +51,7 @@ while True:
         print(f"{player_name} quit the game.")
     else:
         leaderboard[player_name] = result
-        print(f"{player_name} guessed the number in {result} wrong guesses.")
+        print(f"{player_name} guessed the number in {result} guesses.")
 
     again = input("Does anyone else want to play? (y/n): ")
     if again == "n":
