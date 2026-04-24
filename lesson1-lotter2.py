@@ -28,6 +28,8 @@ def play_lottery(player_name):
             else:
                 correct_answers.add(guess)
                 print(f"Awesome, {guess} is indeed a winning number!")
+
+        # Feedback shown after every guess, but not on the final win
         if len(correct_answers) < len(WINNER):
             print(f"You currently have {len(correct_answers)} correct answers.")
 
@@ -36,7 +38,7 @@ def play_lottery(player_name):
 
 
 def print_leaderboard(leaderboard):
-    # sorting
+    # sorting - score is first item in sub-list
     leaderboard.sort()
 
     # Headers for the table
@@ -59,9 +61,8 @@ while True:
     if result is None:
         print(f"{player_name} quit the game.")
     else:
-        leaderboard.append(
-            [result, player_name]
-        )  # Drop the 'list' into the list :D, do it score first to use for sorting later
+        # We store result (score) first so .sort() works automatically
+        leaderboard.append([result, player_name])
         print(f"{player_name} guessed the number in {result} guesses.")
 
     again = input("Does anyone else want to play? (y/n): ")
