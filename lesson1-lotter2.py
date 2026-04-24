@@ -1,4 +1,4 @@
-# Tuple of 3 winning numbers
+# Tuple of winning numbers
 WINNER = (1, 4, 9)
 
 # Define scoreboard
@@ -8,6 +8,7 @@ leaderboard = []  # Was Dict, but sorting shucks :D
 def play_lottery(player_name):
     num_of_guesses = 0  # putting this in the function so it resets when func is called
     correct_answers = set()
+    
     while len(correct_answers) < len(WINNER):
         user_input = input("Guess the number: ")
 
@@ -20,6 +21,7 @@ def play_lottery(player_name):
 
         # DRY applied
         guess = int(user_input)
+        
         if guess not in WINNER:
             num_of_guesses += 1
         else:
@@ -61,7 +63,7 @@ while True:
     if result is None:
         print(f"{player_name} quit the game.")
     else:
-        # We store result (score) first so .sort() works automatically
+        # Store result first, then name for sorting based on score.
         leaderboard.append([result, player_name])
         print(f"{player_name} guessed the number in {result} guesses.")
 
