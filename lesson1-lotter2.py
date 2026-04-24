@@ -41,7 +41,7 @@ def print_leaderboard(leaderboard):
     print("|-------------------|")
     print(f"| {headers[0]:<10}| {headers[1]:<5}|")
     print("|-------------------|")
-    for name, score in leaderboard.items():
+    for score, name in leaderboard:  # Don't forget we did score first, THEN name
         print(f"| {name:<10}| {score:<5}|")
     print("|-------------------|")
 
