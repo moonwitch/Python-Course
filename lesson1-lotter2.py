@@ -2,7 +2,7 @@
 WINNER = (1, 4, 9)
 
 # Define scoreboard
-leaderboard = {}
+leaderboard = [] # Was Dict, but sorting shucks :D
 
 
 def play_lottery(player_name):
@@ -14,13 +14,17 @@ def play_lottery(player_name):
         if user_input.lower() in ["q", "quit"]:
             return None
 
-        if not user_input.isnumeric():
+        if not user_input.isnumeric():  # if it's not a number catch it
             print("Invalid input. Please enter a number.")
             continue
         elif int(user_input) not in WINNER:
             num_of_guesses += 1
         else:
-            correct_answers.add(int(user_input))
+            if int(user_input) in correct_answers:
+                print(f"You already guessed {int(user_input)}. Try again.")
+            else:
+                correct_answers.add(int(user_input))
+                print(f"Awesome, {user_input} is indeed a winning number!")
         print(f"You currently have {len(correct_answers)} correct answers.")
     print("Congratulations!")
     return num_of_guesses
