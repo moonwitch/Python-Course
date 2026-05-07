@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="/static/manifest.json" />
+    <title>Task Slicer</title>
+    <style>
+      :root {
+        --bg: #121212;
+        --card: #1e1e1e;
+        --text: #e0e0e0;
+        --accent: #0085ff;
+        --green: #00c853;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: sans-serif;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+      }
+      .container {
+        max-width: 500px;
+        width: 100%;
+        background: var(--card);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      }
+      input,
+      button,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 6px;
+        border: 1px solid #333;
+        box-sizing: border-box;
+      }
+      input,
+      textarea {
+        background: #262626;
+        color: white;
+      }
+      button {
+        background: var(--accent);
+        color: white;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      button.copy-btn {
+        background: var(--green);
+      }
+      textarea {
+        height: 250px;
+        font-family: monospace;
+        font-size: 0.9rem;
+      }
+      .loader {
+        display: none;
+        text-align: center;
+        color: var(--accent);
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Task Slicer 🧠</h1>
+      <input type="text" id="goal" placeholder="What's the big goal?" />
+      <input type="number" id="hours" placeholder="Total hours (e.g. 6)" />
+      <button onclick="generate()">Slice into Chunks</button>
+
+      <div id="loader" class="loader">Slicing your tasks...</div>
+
+      <textarea
+        id="output"
+        placeholder="Your Monday.com markdown will appear here..."
+      ></textarea>
+      <button class="copy-btn" onclick="copyForMonday()">
+        📋 Copy for Monday.com
+      </button>
+    </div>
+
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js");
+      }
+
+      async function generate() {
+        const goal = document.getElementById("goal").value;
+        const hours = document.getElementById("hours").value;
+        const loader = document.getElementById("loader");
+
+        if (!goal || !hours) return alert("Fill in the blanks first!");
+
+        loader.style.display = "block";
+        const response = await fetch("/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `goal=${encodeURIComponent(goal)}&hours=${hours}`,
+        });
+        const data = await response.json();
+        document.getElementById("output").value = data.markdown;
+        loader.style.display = "none";
+      }
+
+      function copyForMonday() {
+        const text = document.getElementById("output").value;
+        navigator.clipboard.writeText(text);
+        alert("Copied to clipboard! Paste it into a Monday Update.");
+      }
+    </script>
+  </body>
+</html>

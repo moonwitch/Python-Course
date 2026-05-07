@@ -1,0 +1,27 @@
+# Python
+venv/
+env/
+bin/
+lib/
+*.pyc
+__pycache__/
+
+# Environment & Secrets
+.env
+.flaskenv
+*.key
+*.pem
+
+# IDEs
+.vscode/
+.idea/
+.zed/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project Specific
+*.md
+!README.md
