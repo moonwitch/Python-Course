@@ -110,8 +110,47 @@
 
       function copyForMonday() {
         const text = document.getElementById("output").value;
-        navigator.clipboard.writeText(text);
-        alert("Copied to clipboard! Paste it into a Monday Update.");
+
+        // Method 1: Modern Clipboard API
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard
+            .writeText(text)
+            .then(() => {
+              notifySuccess();
+            })
+            .catch((err) => {
+              console.error("Clipboard API failed, trying fallback", err);
+              fallbackCopy(text);
+            });
+        } else {
+          // Method 2: Fallback for non-HTTPS (if accessing via IP)
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text) {
+        const textArea = document.getElementById("output");
+        textArea.focus();
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          notifySuccess();
+        } catch (err) {
+          alert(
+            "Unable to copy. Please select the text and press Ctrl+C manually.",
+          );
+        }
+      }
+
+      function notifySuccess() {
+        const btn = document.querySelector(".copy-btn");
+        const originalText = btn.innerText;
+        btn.innerText = "✅ Copied to Clipboard!";
+        btn.style.background = "#00c853";
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.style.background = ""; // Reverts to CSS default
+        }, 2000);
       }
     </script>
   </body>

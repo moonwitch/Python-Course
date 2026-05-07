@@ -13,7 +13,7 @@ def generate_ai_checklists(goal_name, duration_hours):
         api_key=os.environ.get("GEMINI_API_KEY"),
     )
 
-    model = "gemma-4-26b-a4b-it"
+    model = "gemini-flash-latest"
 
     prompt = f"""
     You are a neurodivergent-friendly DevOps buddy.
@@ -33,7 +33,10 @@ def generate_ai_checklists(goal_name, duration_hours):
             model=model,
             contents=prompt,
             config=types.GenerateContentConfig(
-                temperature=0.5,
+                temperature=0.4,
+                thinking_config=types.ThinkingConfig(
+                    thinking_level="LOW",
+                ),
             ),
         )
         return response.text
